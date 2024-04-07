@@ -26,9 +26,6 @@ class TestIncomeTaxesEndpoint:
         assert response.json() == {"tax owed": 4_086}
 
 
-...
-
-
 class TestCalculateIncomeTaxOwed:
     @pytest.mark.parametrize(
         "salary, expected_tax_owed",
