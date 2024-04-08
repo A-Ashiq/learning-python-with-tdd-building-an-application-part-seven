@@ -1,8 +1,5 @@
-from fastapi import FastAPI
-
 from domain.taxes import calculate_income_tax_owed
-
-app = FastAPI()
+from interfaces.api.main import app
 
 
 @app.get(path="/income-taxes")

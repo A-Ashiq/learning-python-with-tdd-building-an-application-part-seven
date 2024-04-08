@@ -2,7 +2,7 @@ from http import HTTPStatus
 
 from starlette.testclient import TestClient
 
-from main import app
+from interfaces.api.main import app
 
 
 class TestIncomeTaxesEndpoint:
