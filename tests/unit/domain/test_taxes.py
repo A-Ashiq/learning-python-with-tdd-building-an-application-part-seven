@@ -48,3 +48,28 @@ class TestCalculateIncomeTaxOwed:
 
         # Then
         assert calculated_tax_owed == 0
+
+    @pytest.mark.parametrize(
+        "salary, expected_tax_owed",
+        (
+            [150_000, 48_675],
+            [175_000, 59_925],
+            [200_000, 71_175],
+        ),
+    )
+    def test_calculates_for_additional_rate_banding(
+        self, salary: int, expected_tax_owed: float
+    ):
+        """
+        Given a salary which is in the additional rate banding
+        When `calculate_income_tax_owed()` is called
+        Then the correct calculated tax owed is returned
+        """
+        # Given
+        input_salary = salary
+
+        # When
+        calculated_tax_owed: float = calculate_income_tax_owed(salary=input_salary)
+
+        # Then
+        assert calculated_tax_owed == expected_tax_owed
