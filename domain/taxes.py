@@ -1,21 +1,34 @@
-def calculate_income_tax_owed(salary: float) -> float:
-    tax_free_allowance = 12_570
-    basic_rate_threshold = 50_270
-    higher_rate_threshold = 125_140
+PERSONAL_ALLOWANCE_THRESHOLD = 12_570
+HIGHER_RATE_THRESHOLD = 50_270
+ADDITIONAL_RATE_THRESHOLD = 125_140
 
-    if salary <= tax_free_allowance:
+
+def calculate_income_tax_owed(salary: float) -> float:
+    if salary <= PERSONAL_ALLOWANCE_THRESHOLD:
         return 0
 
-    if salary <= basic_rate_threshold:
-        return (salary - tax_free_allowance) * 0.20
+    if salary <= HIGHER_RATE_THRESHOLD:
+        return _calculate_basic_rate_tax_owed(salary=salary)
 
-    if salary <= higher_rate_threshold:
-        return (basic_rate_threshold - tax_free_allowance) * 0.20 + (
-            salary - basic_rate_threshold
-        ) * 0.40
+    if salary <= ADDITIONAL_RATE_THRESHOLD:
+        return _calculate_higher_rate_tax_owed(salary=salary)
 
+    return _calculate_additional_rate_tax_owed(salary=salary)
+
+
+def _calculate_basic_rate_tax_owed(salary) -> float:
+    return (salary - PERSONAL_ALLOWANCE_THRESHOLD) * 0.20
+
+
+def _calculate_higher_rate_tax_owed(salary) -> float:
+    return (HIGHER_RATE_THRESHOLD - PERSONAL_ALLOWANCE_THRESHOLD) * 0.20 + (
+            salary - HIGHER_RATE_THRESHOLD
+    ) * 0.40
+
+
+def _calculate_additional_rate_tax_owed(salary) -> float:
     return (
-        (basic_rate_threshold - tax_free_allowance) * 0.20
-        + (higher_rate_threshold - basic_rate_threshold) * 0.40
-        + (salary - higher_rate_threshold) * 0.45
+            (HIGHER_RATE_THRESHOLD - PERSONAL_ALLOWANCE_THRESHOLD) * 0.20
+            + (ADDITIONAL_RATE_THRESHOLD - HIGHER_RATE_THRESHOLD) * 0.40
+            + (salary - ADDITIONAL_RATE_THRESHOLD) * 0.45
     )
